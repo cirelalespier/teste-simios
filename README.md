@@ -1,2 +1,2 @@
-﻿# DNA SIMIAN
-Verificação se o DNA é simian ou humano
+﻿# DNA SIMIO
+Verificação se o DNA é simiao ou humano
