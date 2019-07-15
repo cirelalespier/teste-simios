@@ -17,20 +17,15 @@ module.exports = {
 
     async store(req, res) {
         const { dna } = req.body;
-        if (isSimian(dna)) {
-            result = true
+        result = isSimian(dna);
             await Simio.create({
                 dna,
                 result
             });
+        if (result) {            
             return res.status(200).send('Is Simian!');
         }
-        else {
-            result = false
-            await Simio.create({
-                dna,
-                result
-            });
+        else {            
             return res.status(403).send('Is human!');
         }        
     }
