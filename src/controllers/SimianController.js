@@ -37,18 +37,17 @@ var matchesPosition = [];
 
 function isSimian(dna) {
 
-    dnaParse = JSON.parse(JSON.stringify(dna).trim().replace("[","").replace("]",""));
+    dnaParse = JSON.parse(JSON.stringify(dna).trim().replace("[","").replace("]","").replace(" ","").replace(" ","").replace(" ","").replace(" ","").replace(" ",""));
     console.log(dnaParse);
     matriz = dnaParse.split('"');  
     matriz.shift();
     matriz.pop();
     var index = matriz.indexOf(',');
-
     while(index >= 0){
         matriz.splice(index, 1);
         index = matriz.indexOf(',');
     }
-    
+    console.log(matriz);
     words = ['CCCC', 'TTTT', 'GGGG', 'AAAA']
 
     var diagonal1 = searchTopRigth(0, 0, matriz.length);
@@ -57,7 +56,7 @@ function isSimian(dna) {
     var diagonal4 = searchDownLeft2(0, 5, matriz.length);
     var vertical = searchVertical(0, 0, matriz.length);
     var dnaCompleto = matriz.concat(diagonal1, diagonal2, diagonal3, diagonal4, vertical);
-    
+    //console.log(dnaCompleto)
     words.forEach(function (w) {
         var wr = w.split('').reverse().join('');
         for (var i = 0, len = dnaCompleto.length; i < len; i++) {
