@@ -3,20 +3,17 @@ const Simio = require('../models/Simian');
 module.exports = {
 
     async index(req, res) {
-
         const simios = await Simio.find({ result: "true" }).countDocuments(function (err, res) {
             if (err)
                 throw err;
             console.log(res);
         });
-
         const human = await Simio.find({ result: "false" }).countDocuments(function (err, res) {
             if (err)
                 throw err;
             console.log(res);
         });
         const ratio = simios / human;
-
         return res.json("count_mutant_dna:" + simios + " count_human_dna:" + human + " ratio:" + ratio);
     },
 
@@ -38,7 +35,6 @@ module.exports = {
         }
         else {
             res.status(403).send('Is human!');
-
         }
     }
 };
@@ -49,18 +45,20 @@ var matchesPosition = [];
 
 function isSimian(dna) {
 
-    dnaParse = JSON.parse(JSON.stringify(dna).trim().replace("[", "").replace("]", ""));
+    dnaParse = JSON.parse(JSON.stringify(dna).trim().replace("[","").replace("]",""));
     console.log(dnaParse);
     matriz = dnaParse.split('"');  
     matriz.shift();
     matriz.pop();
     var index = matriz.indexOf(',');
+
     while(index >= 0){
         matriz.splice(index, 1);
         index = matriz.indexOf(',');
     }
     
     words = ['CCCC', 'TTTT', 'GGGG', 'AAAA']
+
     var diagonal1 = searchTopRigth(0, 0, matriz.length);
     var diagonal2 = searchDownLeft(0, 0, matriz.length);
     var diagonal3 = searchTopRigth2(0, 5, matriz.length);
@@ -78,12 +76,14 @@ function isSimian(dna) {
             }
         }
     });
+
     if (matchesPosition.length > 1) {
         return true;
     } else {
         return false;
     }
 };
+
 function searchDownLeft(x, y, lenMatriz) {
     var wtemp = "";
     for (var i = 0; i < matriz.length; i++) {
@@ -97,6 +97,7 @@ function searchDownLeft(x, y, lenMatriz) {
     }
     return wtemp.split(',');
 }
+
 function searchDownLeft2(x, y, lenMatriz) {
     var wtemp = "";
     for (var i = 0; i < matriz.length; i++) {
@@ -111,6 +112,7 @@ function searchDownLeft2(x, y, lenMatriz) {
     }
     return wtemp.split(',');
 }
+
 function searchTopRigth(x, y, lenMatriz) {
     var wtemp = "";
     for (var i = 0; i < matriz.length; i++) {
@@ -125,6 +127,7 @@ function searchTopRigth(x, y, lenMatriz) {
     }
     return wtemp.split(',');
 }
+
 function searchTopRigth2(x, y, lenMatriz) {
     var wtemp = "";
     for (var i = 0; i < matriz.length; i++) {
@@ -138,6 +141,7 @@ function searchTopRigth2(x, y, lenMatriz) {
     }
     return wtemp.split(',');
 }
+
 function searchVertical(x, y, lenMatriz) {
     var wtemp = "";
     for (var i = 0; i < matriz.length; i++) {
