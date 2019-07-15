@@ -6,8 +6,6 @@ let should = chai.should();
 
 chai.use(chaiHttp);
 
-var dna = '["CTG​A​G​A","CTG​A​G​C","T​AT​T​G​T","​A​GAG​G​G","​CCCC​TA","TCACTG"]';
-
 describe('Books', () => {
     beforeEach((done) => {
         Simio.deleteMany({}, (err) => {
@@ -20,21 +18,20 @@ describe('Books', () => {
             chai.request(server)
                 .get('/stats')
                 .end((err, res) => {
-                    res.should.have.status(200);
-                    //res.body.should.be.a('string');
-                    //res.body.length.should.be.eql(46);
+                    res.should.have.status(200);                     
                     done();
                 });
         });
     });
 
     describe('/POST simian', () => {
-        it('retornará se um DNA é simio ou humano', (done) => {            
+        it('retornará se um DNA é simio ou humano', (done) => {   
+            var dna = '["CTG​A​G​A","CTG​A​G​C","T​AT​T​G​T","​A​GAG​G​G","​CCCC​TA","TCACTG"]';
             chai.request(server)
                 .post('/simian')
                 .send(dna)
                 .end((err, res) => {
-                    res.should.have.status(404);
+                    res.should.have.status(403);
                     done();
                 });
         });
