@@ -9,6 +9,6 @@ mongoose.connect('mongodb+srv://meli:meli@cluster0-ltsls.mongodb.net/test?retryW
 
 app.use(require('./routes'));
 
-app.listen(3333);
+app.listen(process.env.PORT || 3333);
 
 module.exports = app;
