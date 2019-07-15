@@ -6,15 +6,13 @@ module.exports = {
         const simios = await Simio.find({ result: "true" }).countDocuments(function (err, res) {
             if (err)
                 throw err;
-            console.log(res);
         });
         const human = await Simio.find({ result: "false" }).countDocuments(function (err, res) {
             if (err)
                 throw err;
-            console.log(res);
         });
         const ratio = simios / human;
-        return res.json("count_mutant_dna:" + simios + " count_human_dna:" + human + " ratio:" + ratio);
+        return res.end(JSON.stringify({ 'count_mutant_dna': simios, 'count_human_dna': human, 'ratio': ratio }));
     },
 
     async store(req, res) {
@@ -28,13 +26,12 @@ module.exports = {
         const simio = await Simio.create({
             dna,
             result
-        })
+        });
         if (result) {
-            res.status(200).send('Is Simian!');
-            return res.json({ ok: simio });
+            return res.status(200).send('Is Simian!');
         }
         else {
-            res.status(403).send('Is human!');
+            return res.status(403).send('Is human!');
         }
     }
 };
