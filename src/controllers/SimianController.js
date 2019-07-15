@@ -19,20 +19,20 @@ module.exports = {
         const { dna } = req.body;
         if (isSimian(dna)) {
             result = true
-        }
-        else {
-            result = false
-        }
-        const simio = await Simio.create({
-            dna,
-            result
-        });
-        if (result) {
+            await Simio.create({
+                dna,
+                result
+            });
             return res.status(200).send('Is Simian!');
         }
         else {
+            result = false
+            await Simio.create({
+                dna,
+                result
+            });
             return res.status(403).send('Is human!');
-        }
+        }        
     }
 };
 
