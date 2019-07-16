@@ -18,16 +18,16 @@ module.exports = {
     async store(req, res) {
         const { dna } = req.body;
         result = isSimian(dna);
-            await Simio.create({
-                dna,
-                result
-            });
-        if (result) {            
+        await Simio.create({
+            dna,
+            result
+        });
+        if (result) {
             return res.status(200).send('Is Simian!');
         }
-        else {            
+        else {
             return res.status(403).send('Is human!');
-        }        
+        }
     }
 };
 
@@ -37,17 +37,17 @@ var matchesPosition = [];
 
 function isSimian(dna) {
 
-    dnaParse = JSON.parse(JSON.stringify(dna).trim().replace("[","").replace("]","").replace(" ","").replace(" ","").replace(" ","").replace(" ","").replace(" ",""));
-    console.log(dnaParse);
-    matriz = dnaParse.split('"');  
-    matriz.shift();
-    matriz.pop();
-    var index = matriz.indexOf(',');
-    while(index >= 0){
-        matriz.splice(index, 1);
-        index = matriz.indexOf(',');
-    }
-    console.log(matriz);
+    dnaParse = JSON.parse(JSON.stringify(dna).replace("[", "").replace("]", ""));
+    matriz = dna.split('');
+
+    var matrizFinal = matriz.map(function (elem) {
+        if (elem == "A" || elem == "C" || elem == "T" || elem == "G" || elem == ",")
+            return elem;
+    });
+
+    matriz = matrizFinal.join([''])
+    matriz = matriz.split(',');
+
     words = ['CCCC', 'TTTT', 'GGGG', 'AAAA']
 
     var diagonal1 = searchTopRigth(0, 0, matriz.length);
@@ -56,7 +56,7 @@ function isSimian(dna) {
     var diagonal4 = searchDownLeft2(0, 5, matriz.length);
     var vertical = searchVertical(0, 0, matriz.length);
     var dnaCompleto = matriz.concat(diagonal1, diagonal2, diagonal3, diagonal4, vertical);
-    //console.log(dnaCompleto)
+
     words.forEach(function (w) {
         var wr = w.split('').reverse().join('');
         for (var i = 0, len = dnaCompleto.length; i < len; i++) {
@@ -77,7 +77,7 @@ function isSimian(dna) {
 
 function searchDownLeft(x, y, lenMatriz) {
     var wtemp = "";
-    for (var i = 0; i < matriz.length; i++) {
+    for (var i = 0; i < lenMatriz; i++) {
         x += i;
         for (; x < lenMatriz; x++ , y++) {
             wtemp += matriz[x][y];
@@ -91,7 +91,7 @@ function searchDownLeft(x, y, lenMatriz) {
 
 function searchDownLeft2(x, y, lenMatriz) {
     var wtemp = "";
-    for (var i = 0; i < matriz.length; i++) {
+    for (var i = 0; i < lenMatriz; i++) {
         y -= i;
         for (; x < lenMatriz; x++ , y--) {
             wtemp += matriz[x][y];
@@ -106,7 +106,7 @@ function searchDownLeft2(x, y, lenMatriz) {
 
 function searchTopRigth(x, y, lenMatriz) {
     var wtemp = "";
-    for (var i = 0; i < matriz.length; i++) {
+    for (var i = 0; i < lenMatriz; i++) {
         y += i;
         for (; x < lenMatriz; x++ , y++) {
             wtemp += matriz[x][y];
@@ -121,7 +121,7 @@ function searchTopRigth(x, y, lenMatriz) {
 
 function searchTopRigth2(x, y, lenMatriz) {
     var wtemp = "";
-    for (var i = 0; i < matriz.length; i++) {
+    for (var i = 0; i < lenMatriz; i++) {
         x += i;
         for (; x < lenMatriz; x++ , y--) {
             wtemp += matriz[x][y];
@@ -135,7 +135,7 @@ function searchTopRigth2(x, y, lenMatriz) {
 
 function searchVertical(x, y, lenMatriz) {
     var wtemp = "";
-    for (var i = 0; i < matriz.length; i++) {
+    for (var i = 0; i < lenMatriz; i++) {
         for (; x < lenMatriz; x++) {
             wtemp += matriz[x][y];
         }
