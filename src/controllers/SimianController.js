@@ -18,21 +18,19 @@ module.exports = {
     async store(req, res) {
         const { dna } = req.body;
         result = isSimian(dna);
-        const findDna = await Simio.findOne({ dna: dna });        
-        if(findDna==null){
-        await Simio.create({
-            dna,
-            result
-        });  
-    }   
-        if (result) {
-            return res.status(200).send('Is Simian!');
+        const findDna = await Simio.findOne({ dna: dna });
+        if (findDna == null) {
+            await Simio.create({
+                dna,
+                result
+            });
+            if (result) { return res.status(200).send(); }
+            else { return res.status(403).send(); }
+        } else {
+            if (result) { return res.status(200).send(); }
+            else { return res.status(403).send(); }
         }
-        else {
-            return res.status(403).send('Is human!');
-        }
-      
-} 
+    }
 };
 
 var matriz = [];
