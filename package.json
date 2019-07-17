@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node src/index.js",
     "test": "mocha --timeout 50000 src/test.js",
-    "prod": "node src/index.js"
+    "prod": "node src/index.js",
+    "coverage": "istanbul cover src/test.js"
   },
   "author": "",
   "license": "ISC",
@@ -18,5 +19,8 @@
     "mongoose": "^5.6.4",
     "multer": "^1.4.1",
     "nodemon": "^1.19.1"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.5"
   }
 }

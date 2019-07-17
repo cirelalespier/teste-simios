@@ -6,7 +6,7 @@ let should = chai.should();
 
 chai.use(chaiHttp);
 
-describe('Books', () => {
+describe('Simio', () => {
     beforeEach((done) => {
         Simio.deleteMany({}, (err) => {
             done();
@@ -14,27 +14,44 @@ describe('Books', () => {
     });
 
     describe('/GET stats', () => {
-        it('retornará as estatísticas de cadastro no banco', (done) => {
+        it('Retornará as estatísticas de cadastro no banco', (done) => {
             chai.request(server)
                 .get('/stats')
                 .end((err, res) => {
-                    res.should.have.status(200);                     
+                    should.equal(err, null);
+                    res.should.have.status(200);    
+                    done();
+                });
+        });
+    });
+/*
+    describe('/POST simian', () => {
+        it('Retornará que o DNA é simian e status 200', (done) => {   
+            let req = {
+                dna: "'CTGAGA', 'CTCAGC', 'CATTGT', CGAGTG', 'CCCCTA', 'TCACTG'" 
+            }
+            chai.request(server)
+                .post('/simian')
+                .send(req)
+                .end((err, res) => {
+                    should.equal(err, null); 
+                    res.should.have.status(200);
                     done();
                 });
         });
     });
 
     describe('/POST simian', () => {
-        it('retornará se um DNA é simio ou humano', (done) => {   
-            var dna = '["CTG​A​G​A","CTG​A​G​C","T​AT​T​G​T","​A​GAG​G​G","​CCCC​TA","TCACTG"]';
+        it('Retornará que o DNA é humano e status 403', (done) => {   
+            //var dna = "'CTGAGA', 'CTCAGC', 'TATTGT', 'AGAGTG', 'CGCCTA', 'TCACTG'";
             chai.request(server)
                 .post('/simian')
-                .send(dna)
+                .send("'CTGAGA', 'CTCAGC', 'TATTGT', 'AGAGTG', 'CGCCTA', 'TCACTG'")
                 .end((err, res) => {
+                    should.equal(err, null);
                     res.should.have.status(403);
                     done();
                 });
         });
-    });
-
+    });*/
 });
