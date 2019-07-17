@@ -18,40 +18,9 @@ describe('Simio', () => {
             chai.request(server)
                 .get('/stats')
                 .end((err, res) => {
-                    should.equal(err, null);
                     res.should.have.status(200);    
                     done();
                 });
         });
-    });
-/*
-    describe('/POST simian', () => {
-        it('Retornará que o DNA é simian e status 200', (done) => {   
-            let req = {
-                dna: "'CTGAGA', 'CTCAGC', 'CATTGT', CGAGTG', 'CCCCTA', 'TCACTG'" 
-            }
-            chai.request(server)
-                .post('/simian')
-                .send(req)
-                .end((err, res) => {
-                    should.equal(err, null); 
-                    res.should.have.status(200);
-                    done();
-                });
-        });
-    });
-
-    describe('/POST simian', () => {
-        it('Retornará que o DNA é humano e status 403', (done) => {   
-            //var dna = "'CTGAGA', 'CTCAGC', 'TATTGT', 'AGAGTG', 'CGCCTA', 'TCACTG'";
-            chai.request(server)
-                .post('/simian')
-                .send("'CTGAGA', 'CTCAGC', 'TATTGT', 'AGAGTG', 'CGCCTA', 'TCACTG'")
-                .end((err, res) => {
-                    should.equal(err, null);
-                    res.should.have.status(403);
-                    done();
-                });
-        });
-    });*/
+    });    
 });
